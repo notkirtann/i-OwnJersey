@@ -100,7 +100,7 @@ export const products = [
         _id: "aaaaa",
         name: "Real Madrid Home Jersey 24/25",
         description: "Official Real Madrid Home Jersey. A lightweight, breathable football shirt designed for performance and comfort.",
-        price: 100,
+        price: 240,
         image: [p_img1],
         category: "Women",
         subCategory: "Jersey",
