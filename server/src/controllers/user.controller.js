@@ -1,4 +1,6 @@
+import 'dotenv/config'
 import User from '../models/userModel.js'
+import jwt from 'jsonwebtoken'
 import { deleteMail, welcomeMail } from "../emails/account.js";
 
 const registerUser = async (req,res)=>{
@@ -39,6 +41,17 @@ const logoutUser = async (req,res) => {
 };
 
 const adminLogin = async (req,res) => {
+  try {
+    const {email,password} = req.body
+    if(email===process.env.ADMIN_EMAIL || password === process.env.ADMIN_PASS){
+      const token =  jwt.sign(email+password,process.env.JWT_SECRET)
+      res.json(token)
+    }else{
+      res.status(404).json({'message':'invalid credentials'})
+    }
+  } catch (error) {
+    res.status(500).send({ error: "Internal server error" });
+  } 
     
 }
 
