@@ -15,7 +15,6 @@ const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
     const navigate = useNavigate();
 
-    // --- Cart Functionality ---
 
     const addToCart = async (itemId, size) => {
         // Validation: Ensure a size is selected
