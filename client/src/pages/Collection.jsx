@@ -74,7 +74,7 @@ const Collection = () => {
   // 5. Run applyFilter whenever products, category, or subCategory state changes
   useEffect(() => {
     applyFilter();
-  }, [category, subCategory, products,sortType,search,showSearch])
+  }, [category, subCategory, products,sortType,search,showSearch,products])
 
   return (
     <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 border-t'>
