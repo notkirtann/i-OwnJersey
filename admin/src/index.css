@@ -9,6 +9,11 @@
 *{
   font-family: Outfit;
 }
+select,input,textarea{
+  border: 1px solid burlywood;
+  outline-color: bisque;
+  border-radius: 4px;
+}
 
 .prata-regular {
   font-family: "Prata", serif;

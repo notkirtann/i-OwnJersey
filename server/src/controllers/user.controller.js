@@ -43,11 +43,11 @@ const logoutUser = async (req,res) => {
 const adminLogin = async (req,res) => {
   try {
     const {email,password} = req.body
-    if(email===process.env.ADMIN_EMAIL || password === process.env.ADMIN_PASS){
+    if(email===process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASS){
       const token =  jwt.sign(email+password,process.env.JWT_SECRET)
-      res.json(token)
+      res.json({ success: true, token })
     }else{
-      res.status(404).json({'message':'invalid credentials'})
+      res.json({ success: false, message: 'Invalid credentials' })
     }
   } catch (error) {
     res.status(500).send({ error: "Internal server error" });

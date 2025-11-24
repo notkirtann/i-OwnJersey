@@ -12,8 +12,9 @@ const adminAuth = async (req, res, next) => {
         const token_decode = jwt.verify(token, process.env.JWT_SECRET);
 
         
-        //assume signed token (ADMIN_EMAIL + ADMIN_PASSWORD)
-        if (token_decode !== process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD) {
+        const expectedValue = process.env.ADMIN_EMAIL + process.env.ADMIN_PASS;
+        
+        if (token_decode !== expectedValue) {
             return res.json({ success: false, message: "Not Authorized Login Again" })
         }
         next()
