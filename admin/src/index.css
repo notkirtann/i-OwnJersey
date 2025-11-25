@@ -2,17 +2,20 @@
 @import "tailwindcss";
 
 .active{
-  background-color: #C89B92;
-  border-color:black;
+  background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+  border-color: #dc2626;
+  color: white;
+  font-weight: 900;
+  box-shadow: 4px 4px 0px 0px rgba(220, 38, 38, 1);
 }
 
 *{
   font-family: Outfit;
 }
-select,input,textarea{
-  border: 1px solid burlywood;
-  outline-color: bisque;
-  border-radius: 4px;
+
+select, input, textarea {
+  border: 4px solid black;
+  outline-color: #dc2626;
 }
 
 .prata-regular {

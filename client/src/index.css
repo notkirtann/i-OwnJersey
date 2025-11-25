@@ -4,6 +4,7 @@
 a.active hr{
     display: block;
 }
+
 *{
     font-family: Outfit;
 }
@@ -13,13 +14,30 @@ a.active hr{
   font-weight: 400;
   font-style: normal;
 }
+
 ::-webkit-scrollbar{
   display: none;
 }
 
+/* Sports theme active state - bold red underline */
 @media (max-width:640px){
   a.active{
-    background-color: gray;
-    color: black;
+    background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+    color: white;
+    font-weight: 900;
+  }
+}
+
+/* Desktop active state */
+@media (min-width:641px){
+  a.active hr{
+    display: block;
+    background: linear-gradient(90deg, #dc2626 0%, #ea580c 100%);
+    height: 3px;
+  }
+  
+  a.active p{
+    color: #dc2626;
+    font-weight: 900;
   }
 }

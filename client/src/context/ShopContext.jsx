@@ -55,7 +55,7 @@ const ShopContextProvider = (props) => {
         }
         setCartItems(cartData);
 
-        // If logged in, sync with backend (Requires cartController implementation on backend)
+        // If logged in
         if (token) {
             try {
                 await axios.post(backendUrl + '/api/cart/add', { itemId, size }, { headers: { token } });
@@ -119,6 +119,13 @@ const ShopContextProvider = (props) => {
     useEffect(() => {
         getProductsData();
     }, [])
+
+    useEffect(() => {
+        if(!token && localStorage.getItem('token')){
+            setToken(localStorage.getItem('token'))
+        }
+    }, [])
+    
 
     const value = {
         products, currency, delivery_fee,

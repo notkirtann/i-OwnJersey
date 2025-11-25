@@ -3,7 +3,7 @@
 import 'dotenv/config'
 
 import mongoose from 'mongoose'
-const url = process.env.MONGODB_URI
+const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/i-OwnJersey'
 
 console.log("Connecting to MongoDB:....");
 

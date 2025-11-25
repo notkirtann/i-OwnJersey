@@ -10,11 +10,12 @@ const registerUser = async (req,res)=>{
         await user.save();
 
         //welcome mail
-        // await welcomeMail(user.email)
+        await welcomeMail(user.email)
 
-        res.status(201).send({user, token});
+        res.status(201).json({success: true, token});
+
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        res.json({ success: false, message: error.message })
     }
 }
 
@@ -22,9 +23,9 @@ const loginUser = async (req,res)=>{
     try {
     const user = await User.findByCredentials(req.body.email, req.body.password)
     const token = await user.genAuthToken()
-    res.send({user, token})
-  } catch (e) {
-    res.status(400).send('Invalid Login')
+    res.json({success: true, token})
+  } catch (error) {
+    res.json({ success: false, message: error.message })
   }
 }
 

@@ -42,10 +42,10 @@ const List = ({ token }) => {
 
   return (
     <>
-      <p className='mb-2 font-medium text-xl'>All Products List</p>
-      <div className='flex flex-col gap-2 font-sans text-gray-700'>
+      <p className='mb-4 font-black text-2xl uppercase tracking-wider border-b-4 border-red-600 pb-2 inline-block'>All Products List</p>
+      <div className='flex flex-col gap-3 font-sans text-gray-700'>
 
-        <div className='hidden md:grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center py-1 px-2 border bg-gray-100 text-sm font-bold'>
+        <div className='hidden md:grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center py-4 px-4 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-sm font-black uppercase tracking-wide'>
           <b>Image</b>
           <b>Name</b>
           <b>Category</b>
@@ -54,12 +54,12 @@ const List = ({ token }) => {
         </div>
 
         {list.map((item, index) => (
-          <div className='grid grid-cols-[1fr_3fr_1fr] md:grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center gap-2 py-1 px-2 border text-sm' key={index}>
-            <img className='w-12 h-12 object-cover' src={item.image[0]} alt="" />
-            <p>{item.name}</p>
-            <p>{item.category}</p>
-            <p>{currency}{item.price}</p>
-            <p onClick={() => removeProduct(item._id)} className='text-right md:text-center cursor-pointer text-lg text-red-500 hover:text-red-700 font-bold'>
+          <div className='grid grid-cols-[1fr_3fr_1fr] md:grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center gap-3 py-3 px-4 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(220,38,38,1)] hover:border-red-600 transition-all text-sm bg-white font-semibold' key={index}>
+            <img className='w-14 h-14 object-cover border-2 border-black' src={item.image[0]} alt="" />
+            <p className='font-bold'>{item.name}</p>
+            <p className='uppercase tracking-wide'>{item.category}</p>
+            <p className='text-red-600 font-black'>{currency}{item.price}</p>
+            <p onClick={() => removeProduct(item._id)} className='text-right md:text-center cursor-pointer text-2xl text-red-600 hover:text-black font-black hover:scale-110 transition-all'>
               X
             </p>
           </div>
