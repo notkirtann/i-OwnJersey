@@ -81,7 +81,7 @@ const Orders = ({ token }) => {
             </div>
 
             {/* Price */}
-            <p className='text-sm sm:text-[15px] font-black text-red-600 text-xl'>{currency}{order.amount}</p>
+            <p className='text-sm sm:text-[15px] font-black text-red-600'>{currency}{order.amount}</p>
 
             {/* Status Dropdown */}
             <select onChange={(event) => statusHandler(event, order._id)} value={order.status} className='p-3 font-black border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-pointer uppercase tracking-wide text-sm hover:border-red-600 transition-colors'>

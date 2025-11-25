@@ -62,7 +62,7 @@ const Add = ({ token }) => {
   return (
     <div className="w-full max-w-4xl mx-auto mt-8 p-8 bg-white rounded-xl shadow-[0px_10px_30px_rgba(0,0,0,0.1)] border border-gray-100">
       
-      <div className="mb-6 border-b pb-4">
+      <div className="mb-6 border-b-2 pb-4">
         <h2 className="text-2xl font-bold text-gray-800">Add New Product</h2>
         <p className="text-gray-500 text-sm">Fill in the details to list a new jersey.</p>
       </div>
@@ -97,7 +97,7 @@ const Add = ({ token }) => {
           <input 
             onChange={(e) => setName(e.target.value)} 
             value={name} 
-            className='w-full max-w-lg px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all shadow-sm' 
+            className='w-full max-w-lg px-4 py-3 rounded-4xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all shadow-sm' 
             type="text" 
             placeholder='e.g. Manchester United Home Kit' 
             required 

@@ -1,10 +1,10 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
-import Stripe from 'stripe'
-import Razorpay from 'razorpay'
+// import Stripe from 'stripe'
+// import Razorpay from 'razorpay'
 
 
-// Placing orders using COD Method
+// COD Method
 const placeOrder = async (req, res) => {
     try {
         const { userId, items, amount, address } = req.body;
@@ -31,9 +31,10 @@ const placeOrder = async (req, res) => {
         res.json({ success: false, message: error.message })
     }
 }
+// stripe Method
+// razorpay Method
 
-
-// All Orders data for Admin Panel
+// All orders data for admin 
 const allOrders = async (req, res) => {
     try {
         const orders = await orderModel.find({});
@@ -44,7 +45,7 @@ const allOrders = async (req, res) => {
     }
 }
 
-// User Orders data for Frontend
+// User orders data for client
 const userOrders = async (req, res) => {
     try {
         const { userId } = req.body;
@@ -56,7 +57,7 @@ const userOrders = async (req, res) => {
     }
 }
 
-// Update Order Status (Admin)
+// order status (admin)
 const updateStatus = async (req, res) => {
     try {
         await orderModel.findByIdAndUpdate(req.body.orderId, { status: req.body.status });

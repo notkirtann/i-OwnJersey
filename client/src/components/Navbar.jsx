@@ -15,8 +15,11 @@ const Navbar = () => {
     }
     
   return (
-    <div className='flex items-center justify-between py-6 font-bold border-b-4 border-black mb-8 relative z-50'>
-
+    <div>
+      <div className='bg-black text-white text-2xl'>
+        Own The Original 
+      </div>
+      <div className='flex items-center justify-between py-6 font-bold border-b-4 border-black mb-8 relative z-50'>
       <Link to='/'>
         <img src={assets.logo} alt='' className='w-40 hover:scale-105 transition-transform '/>
       </Link>
@@ -82,6 +85,8 @@ const Navbar = () => {
                 <NavLink onClick={()=>setVisible(false)} className='py-3 pl-8 border-b border-gray-700 hover:bg-red-600 hover:pl-12 transition-all font-bold uppercase tracking-wide' to='/contact'>Contact</NavLink>
             </div>
       </div>
+    </div>
+
     </div>
   )
 }

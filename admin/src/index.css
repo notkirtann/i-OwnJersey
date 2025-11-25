@@ -14,7 +14,7 @@
 }
 
 select, input, textarea {
-  border: 4px solid black;
+  /* border: 1px solid black; */
   outline-color: #dc2626;
 }
 
