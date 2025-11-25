@@ -15,11 +15,8 @@ const Navbar = () => {
     }
     
   return (
-    <div>
-      <div className='bg-black text-white text-2xl'>
-        Own The Original 
-      </div>
-      <div className='flex items-center justify-between py-6 font-bold border-b-4 border-black mb-8 relative z-50'>
+      
+      <div className='flex items-center justify-between py-4 font-bold border-b-2 border-black mb-8 relative z-999'>
       <Link to='/'>
         <img src={assets.logo} alt='' className='w-40 hover:scale-105 transition-transform '/>
       </Link>
@@ -54,7 +51,7 @@ const Navbar = () => {
               <img onClick={()=> token ? null : navigate('/login')} src={assets.profile_icon} className='w-5 cursor-pointer hover:scale-110 transition-transform' alt="" />
             {/* //dropdown menu */}
             { token &&
-            <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-4 z-50'>
+            <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-4 z-9999'>
                 <div className='flex flex-col gap-2 w-40 py-4 px-5 bg-black text-white shadow-[4px_4px_0px_0px_rgba(220,38,38,1)] border-2 border-red-600'>
                     <p className='cursor-pointer hover:text-red-500 transition-colors uppercase text-sm font-bold'>My Profile</p>
                     <Link to='/orders'><p className='cursor-pointer hover:text-red-500 transition-colors uppercase text-sm font-bold'>Orders</p></Link>
@@ -73,7 +70,7 @@ const Navbar = () => {
       </div>
       
       {/*Sidebar for small screens*/}
-      <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-linear-to-b from-black to-gray-900 tracking-all transition-all duration-300 z-50 ${visible?'w-full':'w-0'}`}>
+      <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-linear-to-b from-black to-gray-900 tracking-all transition-all duration-300 z-9999 ${visible?'w-full':'w-0'}`}>
             <div className='flex flex-col text-white'>
                 <div onClick={()=>setVisible(false)} className='flex items-center gap-4 p-4 cursor-pointer hover:bg-red-600 transition-colors'>
                     <img className='h-4 rotate-180 invert' src={assets.dropdown_icon} alt="" />
@@ -85,8 +82,6 @@ const Navbar = () => {
                 <NavLink onClick={()=>setVisible(false)} className='py-3 pl-8 border-b border-gray-700 hover:bg-red-600 hover:pl-12 transition-all font-bold uppercase tracking-wide' to='/contact'>Contact</NavLink>
             </div>
       </div>
-    </div>
-
     </div>
   )
 }
