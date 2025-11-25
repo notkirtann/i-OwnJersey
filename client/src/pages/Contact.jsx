@@ -10,9 +10,9 @@ const Contact = () => {
       <div className='text-center text-2xl pt-10 border-black'>
           <div className='inline-flex gap-3 items-center mb-6'>
             <p className='text-black font-black text-4xl uppercase tracking-wider'>
-              Contact <span className='bg-gradient-to-r from-red-600 to-orange-500 bg-clip-text text-transparent'>Us</span>
+              Contact <span className='bg-linear-to-r from-red-600 to-orange-500 bg-clip-text text-transparent'>Us</span>
             </p>
-            <div className='w-16 h-1 bg-gradient-to-r from-red-600 to-orange-500'></div>
+            <div className='w-16 h-1 bg-linear-to-r from-red-600 to-orange-500'></div>
           </div>
       </div>
 
