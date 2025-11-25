@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
+    cartData:{
+        type: Object,
+        default: {}
+    },
     cardDetails:{
         type:Object,
         default:{}

@@ -12,7 +12,7 @@ const authUser = async (req, res, next) => {
         
         // Add the decoded user ID to the request body
         // This will allow controllers to access req.body.userId without the frontend sending it manually
-        req.body.userId = token_decode.id;
+        req.body.userId = token_decode._id;
         
         next();
 

@@ -8,3 +8,4 @@ cloudinary.config({
 })
 console.log('cloudinary sucessfully connected')
 
+export default cloudinary;

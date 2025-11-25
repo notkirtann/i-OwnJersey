@@ -3,11 +3,6 @@ import userModel from "../models/userModel.js";
 import Stripe from 'stripe'
 import Razorpay from 'razorpay'
 
-// Global variables for payment gateways (Initialize with your keys)
-const currency = 'usd'
-const deliveryCharge = 10
-
-
 
 // Placing orders using COD Method
 const placeOrder = async (req, res) => {

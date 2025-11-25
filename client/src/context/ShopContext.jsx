@@ -35,6 +35,18 @@ const ShopContextProvider = (props) => {
         }
     }
 
+     const getUserCart = async (token) => {
+        try {
+            const response = await axios.post(backendUrl + '/api/cart/get', {}, { headers: { token } });
+            if (response.data.success) {
+                setCartItems(response.data.cartData);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message);
+        }
+    }
+
     const addToCart = async (itemId, size) => {
         if (!size) {
             toast.error('Select Product Size');
@@ -123,8 +135,12 @@ const ShopContextProvider = (props) => {
     useEffect(() => {
         if(!token && localStorage.getItem('token')){
             setToken(localStorage.getItem('token'))
+            getUserCart(localStorage.getItem('token'))
         }
-    }, [])
+        if(token){
+            getUserCart(token)
+        }
+    }, [token])
     
 
     const value = {
