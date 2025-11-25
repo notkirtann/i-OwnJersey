@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
-import Title from '../components/Title';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -46,9 +45,9 @@ const Orders = () => {
       <div className='text-2xl mb-8'>
         <div className='inline-flex gap-3 items-center'>
           <p className='text-black font-black text-3xl uppercase tracking-wider'>
-            My <span className='bg-gradient-to-r from-red-600 to-orange-500 bg-clip-text text-transparent'>Orders</span>
+            My <span className='bg-linear-to-r from-red-600 to-orange-500 bg-clip-text text-transparent'>Orders</span>
           </p>
-          <div className='w-16 h-1 bg-gradient-to-r from-red-600 to-orange-500'></div>
+          <div className='w-16 h-1 bg-linear-to-r from-red-600 to-orange-500'></div>
         </div>
       </div>
 
@@ -74,7 +73,7 @@ const Orders = () => {
                 </div>
                 <div className='md:w-1/2 flex justify-between'>
                   <div className='flex items-center gap-2'>
-                    <p className='min-w-3 h-3 rounded-full bg-gradient-to-r from-green-500 to-green-600 shadow-[0_0_8px_rgba(34,197,94,0.6)]'></p>
+                    <p className='min-w-3 h-3 rounded-full bg-linear-to-r from-green-500 to-green-600 shadow-[0_0_8px_rgba(34,197,94,0.6)]'></p>
                     <p className='text-sm md:text-base font-bold'>{item.status}</p>
                   </div>
                   <button 
