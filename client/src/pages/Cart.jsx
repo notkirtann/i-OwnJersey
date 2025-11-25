@@ -28,7 +28,7 @@ const Cart = () => {
   }, [cartItems, products])
 
   return (
-    <div className='border-black pt-14'>
+    <div className='border-black pt-14 mx-10'>
 
       <div className='text-2xl mb-6'>
         <div className='inline-flex gap-3 items-center'>

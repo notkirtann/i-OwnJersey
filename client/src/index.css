@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
 @import "tailwindcss";
+/* In index.css */
+.sidebar-link {
+  @apply py-3 pl-8 border-b border-gray-700 hover:bg-red-600 hover:pl-12 transition-all font-bold uppercase tracking-wide;
+}
 
 a.active hr{
     display: block;

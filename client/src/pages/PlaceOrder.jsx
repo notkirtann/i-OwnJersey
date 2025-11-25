@@ -84,11 +84,10 @@ const PlaceOrder = () => {
     }
   }
 
-  // Common input style class for cleaner JSX
   const inputStyle = 'w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all shadow-sm';
 
   return (
-    <form onSubmit={onSubmitHandler} className='flex flex-col sm:flex-row justify-between gap-12 pt-8 sm:pt-14 min-h-[80vh] border-t border-gray-200'>
+    <form onSubmit={onSubmitHandler} className='flex flex-col sm:flex-row justify-between gap-12 pt-8 sm:pt-14 min-h-[80vh] border-t border-gray-200 mx-30'>
       
       {/* ------------- Left Side: Delivery Information ---------------- */}
       <div className='flex flex-col gap-6 w-full sm:max-w-[480px]'>

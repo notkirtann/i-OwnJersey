@@ -40,7 +40,7 @@ const Orders = () => {
   }, [token])
 
   return (
-    <div className='border-black pt-16'>
+    <div className='border-black pt-16 mx-10'>
 
       <div className='text-2xl mb-8'>
         <div className='inline-flex gap-3 items-center'>
