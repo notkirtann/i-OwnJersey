@@ -13,7 +13,7 @@ const BestSeller = () => {
     },[products])
   
     return (
-    <div className='my-16 py-12 bg-linear-to-br from-gray-900 via-gray-800 to-black text-white'>
+    <div className='my-10 py-6 bg-linear-to-br from-gray-900 via-gray-800 to-black text-white mx-10'>
         <div className='text-center text-3xl py-8'>
             <div className='inline-flex gap-3 items-center mb-6'>
               <div className='w-12 h-1 bg-linear-to-r from-red-600 to-orange-500'></div>

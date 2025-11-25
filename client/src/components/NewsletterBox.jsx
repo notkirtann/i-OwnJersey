@@ -7,11 +7,11 @@ const NewsletterBox = () => {
     }
 
   return (
-    <div className='text-center py-16 bg-gradient-to-br from-black via-gray-900 to-black border-2 border-black shadow-[8px_8px_0px_0px_rgba(220,38,38,1)] my-16'>
+    <div className='text-center py-16 bg-linear-to-br from-black via-gray-900 to-black border-2 border-black shadow-[8px_8px_0px_0px_rgba(220,38,38,1)] my-16 mx-20'>
       <p className='text-3xl font-black text-white uppercase tracking-wider mb-4'>
         Become Premium Member
       </p>
-      <p className='text-lg font-black bg-gradient-to-r from-red-600 to-orange-500 bg-clip-text text-transparent uppercase tracking-wider mb-4'>
+      <p className='text-lg font-black bg-linear-to-r from-red-600 to-orange-500 bg-clip-text text-transparent uppercase tracking-wider mb-4'>
         Get 10-15% Off Every Purchase
       </p>
       <p className='text-gray-300 mt-3 font-semibold max-w-md mx-auto'>

@@ -29,7 +29,7 @@ const RelatedProducts = ({category, subCategory}) => {
             <div className='inline-flex gap-3 items-center mb-6'>
               <div className='w-12 h-1 bg-gradient-to-r from-red-600 to-orange-500'></div>
               <p className='text-black font-black text-4xl uppercase tracking-wider'>
-                Related <span className='bg-gradient-to-r from-red-600 to-orange-500 bg-clip-text text-transparent'>Products</span>
+                Related <span className='bg-linear-to-r from-red-600 to-orange-500 bg-clip-text text-transparent'>Products</span>
               </p>
               <div className='w-12 h-1 bg-gradient-to-r from-orange-500 to-red-600'></div>
             </div>

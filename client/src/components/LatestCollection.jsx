@@ -13,7 +13,7 @@ const LatestCollection = () => {
     },[products])
 
   return (
-    <div className='my-16 py-12 bg-linear-to-b from-white to-gray-50'>
+    <div className='my-16 mx-4 py-12 bg-linear-to-b from-white to-gray-50'>
       <div className='text-center py-8 text-3xl'>
         <div className='inline-flex gap-3 items-center mb-6'>
           <div className='w-12 h-1 bg-linear-to-r from-red-600 to-orange-500'></div>

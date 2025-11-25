@@ -5,7 +5,7 @@ import NewsletterBox from '../components/NewsletterBox'
 
 const About = () => {
   return (
-    <div>
+    <div className='lg:px-[4vw]'>
       
       <div className='text-2xl text-center pt-10 border-black'>
           <div className='inline-flex gap-3 items-center mb-6'>

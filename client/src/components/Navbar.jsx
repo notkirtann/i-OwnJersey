@@ -16,7 +16,7 @@ const Navbar = () => {
     
   return (
       
-      <div className='flex items-center justify-between py-4 font-bold border-b-2 border-black mb-8 relative z-50'>
+      <div className='flex items-center justify-between py-4 font-bold border-b-2 border-black mb-8 relative z-50 mx-10'>
       <Link to='/'>
         <img src={assets.logo} alt='' className='w-40 hover:scale-105 transition-transform '/>
       </Link>
@@ -70,7 +70,7 @@ const Navbar = () => {
       </div>
       
       {/*Sidebar for small screens*/}
-      <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-linear-to-b from-black to-gray-900 -tracking-widest transition-all duration-300 z-9999 ${visible?'w-full':'w-0'}`}>
+      <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-linear-to-b from-black to-gray-900 -tracking-widest transition-all duration-300 z-50 ${visible?'w-full':'w-0'}`}>
             <div className='flex flex-col text-white'>
                 <div onClick={()=>setVisible(false)} className='flex items-center gap-4 p-4 cursor-pointer hover:bg-red-600 transition-colors'>
                     <img className='h-4 rotate-180 invert' src={assets.dropdown_icon} alt="" />
