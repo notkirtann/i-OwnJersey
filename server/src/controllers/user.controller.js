@@ -31,9 +31,7 @@ const loginUser = async (req,res)=>{
 
 const logoutUser = async (req,res) => {
    try {
-    req.user.tokens = req.user.tokens.filter((token)=>{
-      return token.token !== req.token 
-    })
+     req.user.tokens = []
     await req.user.save()
     res.send('Succesfully Logout')
   } catch (e) {
