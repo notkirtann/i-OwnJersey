@@ -20,18 +20,10 @@ app.use(cors({
   'https://i-own-jersey-admin.vercel.app',
   'http://localhost:5173',
   'http://localhost:5174'],
-  credentials: true
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
-
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://i-own-jersey.vercel.app");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  if (req.method === "OPTIONS") return res.status(200).end();
-  next();
-});
 
 app.get('/', (req, res) => {
   res.json({ success: true, message: 'API is working!' });
