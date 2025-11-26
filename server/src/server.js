@@ -15,6 +15,25 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
+const allowedOrigins = [
+  'https://i-own-jersey.vercel.app/',
+  'https://i-own-jersey-admin.vercel.app/',
+  'http://localhost:5173',
+  'http://localhost:5174'
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
+
 //api endpoints
 app.use('/api/user', userRoutes)
 app.use('/api/product', productRoutes)
