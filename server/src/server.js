@@ -10,39 +10,59 @@ import orderRoutes from './routes/order.routes.js'
 
 const app = express()
 
-// CORS Configuration - ADD THIS BEFORE OTHER MIDDLEWARE
 const allowedOrigins = [
-  'https://i-own-jersey.vercel.app',           
-  'https://i-own-jersey-admin.vercel.app',     
-  'http://localhost:5173',                      
-  'http://localhost:5174'                      
+  'https://i-own-jersey.vercel.app',
+  'https://i-own-jersey-admin.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:5174'
 ];
 
-app.use(cors({
+const corsOptions = {
   origin: function(origin, callback) {
     // Allow requests with no origin (mobile apps, Postman, etc.)
     if (!origin) return callback(null, true);
     
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
     }
-    return callback(null, true);
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'token']
-}));
+  allowedHeaders: ['Content-Type', 'Authorization', 'token'],
+  exposedHeaders: ['Content-Length', 'X-Request-Id'],
+  maxAge: 600 
+};
 
-// Other middleware
-app.use(express.json())
+
+app.use(cors(corsOptions));
+
+app.options('*', cors(corsOptions));
+
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.json({ success: true, message: 'API is working!' });
+});
 
 // API endpoints
-app.use('/api/user', userRoutes)
-app.use('/api/product', productRoutes)
-app.use('/api/cart', cartRoutes)
-app.use('/api/order', orderRoutes)
+app.use('/api/user', userRoutes);
+app.use('/api/product', productRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/order', orderRoutes);
 
-app.listen(process.env.PORT || 8000, () => {
-    console.log(`Server running on PORT ${process.env.PORT || 8000}`);
-})
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ 
+    success: false, 
+    message: err.message || 'Something went wrong!' 
+  });
+});
+
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on PORT ${PORT}`);
+});
