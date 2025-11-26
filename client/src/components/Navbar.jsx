@@ -3,11 +3,15 @@ import { assets } from '../assets/assets'
 import { NavLink, Link } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext'
 
+export const adminPanelUrl = import.meta.env.VITE_ADMIN_URL;
+
 const Navbar = () => {
   const [visible, setVisible] = useState(false)
   const { setShowSearch, getCartCount, navigate, token, setToken, setCartItems } = useContext(ShopContext)
 
   const logout = () => { navigate('/login'); localStorage.removeItem('token'); setToken(''); setCartItems({}) }
+
+  
 
   return (
     <div className='flex items-center justify-between py-4 font-bold border-b-2 border-black mb-8 relative z-50 mx-10'>
@@ -19,6 +23,17 @@ const Navbar = () => {
         <NavLink to='/collection' className='flex flex-col items-center gap-1 uppercase hover:text-red-600'><p>Collection</p></NavLink>
         <NavLink to='/about' className='flex flex-col items-center gap-1 uppercase hover:text-red-600'><p>About</p></NavLink>
         <NavLink to='/contact' className='flex flex-col items-center gap-1 uppercase hover:text-red-600'><p>Contact</p></NavLink>
+        {!token && (
+          <a 
+            href={adminPanelUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className='flex flex-col items-center gap-1 uppercase hover:text-blue-600 text-white border-black border-2 rounded-4xl px-2 bg-black'
+          >
+            <p>Admin</p>
+          </a>
+        )}      
+      
       </ul>
 
       <div className='flex items-center gap-6'>

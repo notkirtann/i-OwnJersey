@@ -21,7 +21,7 @@ const SearchBar = () => {
     }
     
   return (
-    <div className='border-t-4 border-b-4 border-black bg-gradient-to-r from-gray-50 to-white text-center py-6'>
+    <div className='border-t-4 border-b-4 border-black bg-linear-to-r from-gray-50 to-white text-center py-6'>
       <div className='inline-flex items-center justify-center border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] px-6 py-3 my-3 mx-3 w-3/4 sm:w-1/2 bg-white'>
         <input 
           value={search} 

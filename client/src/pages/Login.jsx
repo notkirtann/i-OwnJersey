@@ -50,7 +50,7 @@ const Login = () => {
       onSubmit={onSubmitHandler} 
       className='flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 
       text-gray-800 border-2 border-black 
-      shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 bg-white mx-10'
+      shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 bg-white '
     >
       <div className='inline-flex items-center gap-2 mb-4 mt-6'>
         <p className='prata-regular text-4xl font-black uppercase tracking-wider'>

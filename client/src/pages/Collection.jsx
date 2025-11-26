@@ -63,7 +63,7 @@ const Collection = () => {
   }, [category, subCategory, products,sortType,search,showSearch,products])
 
   return (
-    <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 border-black pt-8'>
+    <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 border-black pt-8 mx-12'>
       {/*Filter Options */}
       <div className='min-w-64'>
         <p onClick={() => setShowFilter(!showFilter)} className='my-2 text-xl flex items-center cursor-pointer gap-2 font-black uppercase tracking-wider hover:text-red-600 transition-colors'>
