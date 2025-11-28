@@ -6,6 +6,9 @@ import cors from 'cors';
 import './config/mongodb.js';
 import './config/cloudinary.js';
 
+//swagger
+import { swaggerUi,swaggerDocument } from './config/swagger.js';
+
 import userRoutes from './routes/user.routes.js';
 import productRoutes from './routes/product.routes.js';
 import cartRoutes from './routes/cart.routes.js';
@@ -27,9 +30,26 @@ app.use(cors({
   allowedHeaders: "*",
 }));
 
+app.use('/api-docs', swaggerUi.serve,(req,res,next)=>{
+  swaggerDocument.servers = [{
+    url: `https://i-own-jersey-admin.vercel.app`,
+      description: 'Production Server'
+  },{
+    url: `http://localhost:${process.env.PORT}`,
+      description: 'Deployment Server'
+  }];
+  return swaggerUi.setup(swaggerDocument, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: "i-OwnJersey API Docs",
+})(req,res,next)
+} );
 
 app.get('/', (req, res) => {
-  res.json({ success: true, message: 'API is working!' });
+  res.json({ 
+    success: true, 
+    message: 'API is working!',
+    documentation : '/api-docs' 
+  });
 });
 
 app.use('/api/user', userRoutes);
@@ -37,7 +57,9 @@ app.use('/api/product', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/order', orderRoutes);
 
-export default app;
 
-// const PORT = process.env.PORT || 8000; 
-// app.listen(PORT, () => {  console.log(`Server running on PORT ${PORT}`); });
+
+const PORT = process.env.PORT; 
+app.listen(PORT, () => {  console.log(`Server running on PORT ${PORT}`); });
+
+export default app;

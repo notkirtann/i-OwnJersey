@@ -1,0 +1,1043 @@
+openapi: 3.0.0
+info:
+  title: i-OwnJersey API
+  version: 1.0.0
+  description: API documentation for i-OwnJersey e-commerce platform - Your ultimate destination for authentic sports jerseys
+  contact:
+    name: i-OwnJersey Support
+    email: admin@iojersey.com
+tags:
+  - name: User
+    description: User authentication and management
+  - name: Admin
+    description: Admin authentication and operations
+  - name: Product
+    description: Product management
+  - name: Cart
+    description: Shopping cart operations
+  - name: Order
+    description: Order management
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Enter JWT token from login/register
+
+  schemas:
+    User:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          format: email
+          example: john@example.com
+        password:
+          type: string
+          format: password
+          minLength: 8
+          example: StrongPass123!
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: john@example.com
+        password:
+          type: string
+          format: password
+          example: StrongPass123!
+
+    AdminLoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: admin@iOwnJersey.com
+        password:
+          type: string
+          example: SupportLB
+
+    Product:
+      type: object
+      required:
+        - name
+        - description
+        - price
+        - category
+        - subCategory
+        - sizes
+      properties:
+        _id:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        name:
+          type: string
+          example: Manchester United Home Jersey 24/25
+        description:
+          type: string
+          example: Official Manchester United home jersey with premium fabric
+        price:
+          type: number
+          example: 2500
+        category:
+          type: string
+          enum: [Men, Women, Kids]
+          example: Men
+        subCategory:
+          type: string
+          enum: [Jersey, Shorts, Studs]
+          example: Jersey
+        sizes:
+          type: array
+          items:
+            type: string
+            enum: [S, M, L, XL, XXL]
+          example: [M, L, XL]
+        bestseller:
+          type: boolean
+          example: true
+        image:
+          type: array
+          items:
+            type: string
+          example: 
+            - https://cloudinary.com/image1.jpg
+            - https://cloudinary.com/image2.jpg
+        date:
+          type: number
+          example: 1640000000000
+
+    ProductAddRequest:
+      type: object
+      required:
+        - name
+        - description
+        - price
+        - category
+        - subCategory
+        - sizes
+      properties:
+        name:
+          type: string
+          example: Barcelona Home Jersey
+        description:
+          type: string
+          example: Official Barcelona home jersey
+        price:
+          type: number
+          example: 2800
+        category:
+          type: string
+          enum: [Men, Women, Kids]
+          example: Men
+        subCategory:
+          type: string
+          enum: [Jersey, Shorts, Studs]
+          example: Jersey
+        sizes:
+          type: string
+          example: '["S","M","L","XL"]'
+        bestseller:
+          type: string
+          example: 'true'
+        image1:
+          type: string
+          format: binary
+        image2:
+          type: string
+          format: binary
+        image3:
+          type: string
+          format: binary
+        image4:
+          type: string
+          format: binary
+
+    CartItem:
+      type: object
+      properties:
+        itemId:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        size:
+          type: string
+          example: M
+        quantity:
+          type: number
+          example: 2
+
+    Order:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        userId:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              quantity:
+                type: number
+              size:
+                type: string
+              price:
+                type: number
+        amount:
+          type: number
+          example: 2510
+        address:
+          type: object
+          properties:
+            firstName:
+              type: string
+              example: John
+            lastName:
+              type: string
+              example: Doe
+            email:
+              type: string
+              example: john@example.com
+            street:
+              type: string
+              example: 123 Main St
+            city:
+              type: string
+              example: Bangalore
+            state:
+              type: string
+              example: Karnataka
+            zipcode:
+              type: string
+              example: 560001
+            country:
+              type: string
+              example: India
+            phone:
+              type: string
+              example: 9876543210
+        status:
+          type: string
+          enum: [Order Placed, Packing, Shipped, Out for delivery, Delivered]
+          example: Order Placed
+        paymentMethod:
+          type: string
+          enum: [COD, Stripe, Razorpay]
+          example: COD
+        payment:
+          type: boolean
+          example: false
+        date:
+          type: number
+          example: 1640000000000
+
+    PlaceOrderRequest:
+      type: object
+      required:
+        - items
+        - amount
+        - address
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+              name:
+                type: string
+              quantity:
+                type: number
+              size:
+                type: string
+              price:
+                type: number
+        amount:
+          type: number
+          example: 2510
+        address:
+          type: object
+          required:
+            - firstName
+            - lastName
+            - email
+            - street
+            - city
+            - state
+            - zipcode
+            - country
+            - phone
+          properties:
+            firstName:
+              type: string
+              example: John
+            lastName:
+              type: string
+              example: Doe
+            email:
+              type: string
+              example: john@example.com
+            street:
+              type: string
+              example: 123 Main St
+            city:
+              type: string
+              example: Bangalore
+            state:
+              type: string
+              example: Karnataka
+            zipcode:
+              type: string
+              example: 560001
+            country:
+              type: string
+              example: India
+            phone:
+              type: string
+              example: 9876543210
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Operation successful
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: Error message
+
+paths:
+  # USER ROUTES
+  /api/user/register:
+    post:
+      tags:
+        - User
+      summary: Register a new user
+      description: Create a new user account and receive a welcome email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User successfully registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        '400':
+          description: Registration failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/user/login:
+    post:
+      tags:
+        - User
+      summary: Login user
+      description: Authenticate user and receive JWT token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/user/admin:
+    post:
+      tags:
+        - Admin
+      summary: Admin login
+      description: Authenticate admin user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminLoginRequest'
+      responses:
+        '200':
+          description: Admin login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/user/logout:
+    post:
+      tags:
+        - User
+      summary: Logout user
+      description: Invalidate user token
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Successfully Logout
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/user/me:
+    get:
+      tags:
+        - User
+      summary: Get user profile
+      description: Get current logged-in user's profile
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: User profile retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  cartData:
+                    type: object
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/user/me/update:
+    patch:
+      tags:
+        - User
+      summary: Update user profile
+      description: Update user information
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: John Updated
+                email:
+                  type: string
+                  example: johnupdated@example.com
+                password:
+                  type: string
+                  example: NewPass123!
+      responses:
+        '200':
+          description: Profile updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+        '400':
+          description: Invalid updates
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/user/me:
+    delete:
+      tags:
+        - User
+      summary: Delete user account
+      description: Delete current user account and send deletion email
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # PRODUCT ROUTES
+  /api/product/list:
+    get:
+      tags:
+        - Product
+      summary: Get all products
+      description: Retrieve list of all products
+      responses:
+        '200':
+          description: Products retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+        '400':
+          description: Error retrieving products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/product/add:
+    post:
+      tags:
+        - Product
+      summary: Add new product (Admin only)
+      description: Add a new product with images
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductAddRequest'
+      responses:
+        '201':
+          description: Product added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Product Added
+                  product:
+                    $ref: '#/components/schemas/Product'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/product/get:
+    post:
+      tags:
+        - Product
+      summary: Get product by ID
+      description: Retrieve single product details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - productId
+              properties:
+                productId:
+                  type: string
+                  example: 507f1f77bcf86cd799439011
+      responses:
+        '200':
+          description: Product retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  product:
+                    $ref: '#/components/schemas/Product'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/product/remove:
+    post:
+      tags:
+        - Product
+      summary: Remove product (Admin only)
+      description: Delete a product from database
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+                  example: 507f1f77bcf86cd799439011
+      responses:
+        '200':
+          description: Product removed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Product Removed
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # CART ROUTES
+  /api/cart/get:
+    post:
+      tags:
+        - Cart
+      summary: Get user cart
+      description: Retrieve current user's cart data
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Cart retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  cartData:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      additionalProperties:
+                        type: number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/cart/add:
+    post:
+      tags:
+        - Cart
+      summary: Add item to cart
+      description: Add product to user's cart
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - itemId
+                - size
+              properties:
+                itemId:
+                  type: string
+                  example: 507f1f77bcf86cd799439011
+                size:
+                  type: string
+                  example: M
+      responses:
+        '200':
+          description: Item added to cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Added To Cart
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/cart/update:
+    post:
+      tags:
+        - Cart
+      summary: Update cart item quantity
+      description: Update quantity of item in cart
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - itemId
+                - size
+                - quantity
+              properties:
+                itemId:
+                  type: string
+                  example: 507f1f77bcf86cd799439011
+                size:
+                  type: string
+                  example: M
+                quantity:
+                  type: number
+                  example: 3
+      responses:
+        '200':
+          description: Cart updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Cart Updated
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ORDER ROUTES
+  /api/order/list:
+    post:
+      tags:
+        - Order
+      summary: Get all orders (Admin only)
+      description: Retrieve all orders for admin panel
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Orders retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/order/status:
+    post:
+      tags:
+        - Order
+      summary: Update order status (Admin only)
+      description: Update the status of an order
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - orderId
+                - status
+              properties:
+                orderId:
+                  type: string
+                  example: 507f1f77bcf86cd799439011
+                status:
+                  type: string
+                  enum: [Order Placed, Packing, Shipped, Out for delivery, Delivered]
+                  example: Shipped
+      responses:
+        '200':
+          description: Status updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Status Updated
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/order/place:
+    post:
+      tags:
+        - Order
+      summary: Place order (COD)
+      description: Place a new order with Cash on Delivery
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaceOrderRequest'
+      responses:
+        '200':
+          description: Order placed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Order Placed
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/order/stripe:
+    post:
+      tags:
+        - Order
+      summary: Place order (Stripe)
+      description: Place order with Stripe payment
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaceOrderRequest'
+      responses:
+        '200':
+          description: Payment initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/order/razorpay:
+    post:
+      tags:
+        - Order
+      summary: Place order (Razorpay)
+      description: Place order with Razorpay payment
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaceOrderRequest'
+      responses:
+        '200':
+          description: Payment initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/order/userorders:
+    post:
+      tags:
+        - Order
+      summary: Get user orders
+      description: Retrieve all orders for logged-in user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: User orders retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
