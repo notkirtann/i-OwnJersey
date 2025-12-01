@@ -35,9 +35,9 @@ swaggerDocument.servers = [
   {
     url: process.env.NODE_ENV === 'production'
       ? 'https://i-own-jersey-backend.vercel.app'
-      : `http://localhost:${process.env.PORT || 8000}`,
-    description: process.env.NODE_ENV === 'production' 
-      ? 'Production Server' 
+      : `http://localhost:${process.env.PORT}`,
+    description: process.env.NODE_ENV === 'production'
+      ? 'Production Server'
       : 'Development Server'
   }
 ];
@@ -48,7 +48,7 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument, {
     customCss: '.swagger-ui .topbar { display: none }',
-    customSiteTitle: "i-OwnJersey API Docs",
+    customSiteTitle: 'i-OwnJersey API Docs',
   })
 );
 
