@@ -8,11 +8,12 @@
   ],
   "routes": [
     {
+      "src": "/api-docs/(.*)",
+      "dest": "/api-docs"
+    },
+    {
       "src": "/(.*)",
       "dest": "src/server.js"
     }
-  ],
-  "rewrites": [
-    { "source": "/api-docs/(.*)", "destination": "/api-docs" }
   ]
 }
