@@ -9,8 +9,6 @@ import Login from './components/Login'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Export backendUrl so other components can use it
-export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const App = () => {
 
