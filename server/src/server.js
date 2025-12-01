@@ -30,20 +30,23 @@ app.use(cors({
   allowedHeaders: "*",
 }));
 
-app.use('/api-docs', swaggerUi.serve,(req,res,next)=>{
+app.use('/api-docs', swaggerUi.serve);
+app.get('/api-docs', (req, res, next) => {
+  // Update servers based on environment
   swaggerDocument.servers = [
-  {
-    url: `https://i-own-jersey-backend.vercel.app`,
-      description: 'Production Server'
-  },{
-    url: `http://localhost:${process.env.PORT}`,
-      description: 'Deployment Server'
-  }];
-  return swaggerUi.setup(swaggerDocument, {
-  customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: "i-OwnJersey API Docs",
-})(req,res,next)
-} );
+    {
+      url: process.env.NODE_ENV === 'production' 
+        ? 'https://i-own-jersey-backend.vercel.app'
+        : `http://localhost:${process.env.PORT || 8000}`,
+      description: process.env.NODE_ENV === 'production' ? 'Production Server' : 'Development Server'
+    }
+  ];
+  
+  swaggerUi.setup(swaggerDocument, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: "i-OwnJersey API Docs",
+  })(req, res, next);
+});
 
 app.get('/', (req, res) => {
   res.json({ 
