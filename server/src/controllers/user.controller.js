@@ -55,7 +55,7 @@ const adminLogin = async (req,res) => {
 }
 
 const getMyProfile = async (req, res) => {
-  res.send(req.user)
+  res.json(req.user)
 }
 
 const updateUser = async (req, res) => {

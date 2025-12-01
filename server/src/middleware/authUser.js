@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import User from '../models/userModel.js';
 
 const authUser = async (req, res, next) => {
     try {
@@ -9,10 +10,16 @@ const authUser = async (req, res, next) => {
         }
 
         const token_decode = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findOne({ 
+            _id: decoded._id,  
+            'tokens.token': token 
+        });
         
         // Add the decoded user ID to the request body
         // This will allow controllers to access req.body.userId without the frontend sending it manually
-        req.body.userId = token_decode._id;
+        // req.body.userId = token_decode._id;
+        req.token = token;
+        req.user = user;
         
         next();
 
