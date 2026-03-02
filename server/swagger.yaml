@@ -7,14 +7,6 @@ info:
     name: i-OwnJersey Support/Admin
     email: contactkirtann@gmail.com
 
-servers:
-  - url: http://localhost:8000
-    description: Development server
-  - url: https://notkirtann-backend.vercel.app
-    description: Production server
-  - url: https://i-own-jersey-admin.vercel.app
-    description: Admin server
-
 tags:
   - name: User
     description: User authentication and management
@@ -506,6 +498,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - User
+      summary: Delete user account
+      description: Delete current user account and send deletion email
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /api/user/me/update:
     patch:
@@ -547,35 +566,6 @@ paths:
                     type: string
         '400':
           description: Invalid updates
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-  /api/user/me:
-    delete:
-      tags:
-        - User
-      summary: Delete user account
-      description: Delete current user account and send deletion email
-      security:
-        - bearerAuth: []
-      responses:
-        '200':
-          description: User deleted successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  _id:
-                    type: string
-                  name:
-                    type: string
-                  email:
-                    type: string
-        '500':
-          description: Internal server error
           content:
             application/json:
               schema:

@@ -52,9 +52,23 @@ app.use("/api/product", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/order", orderRoutes);
 
-// Serve swagger spec as JSON
+//dynamically inject the current server URL
 app.get("/api-docs/swagger.json", (req, res) => {
-  res.json(swaggerDocument);
+  const protocol = req.headers["x-forwarded-proto"] || req.protocol;
+  const host = req.headers["x-forwarded-host"] || req.get("host");
+  const baseUrl = `${protocol}://${host}`;
+
+  const dynamicDoc = {
+    ...swaggerDocument,
+    servers: [
+      {
+        url: baseUrl,
+        description: "Current server (auto-detected)",
+      },
+    ],
+  };
+
+  res.json(dynamicDoc);
 });
 
 app.get("/api-docs", (req, res) => {
