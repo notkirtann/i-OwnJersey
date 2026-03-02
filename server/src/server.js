@@ -21,17 +21,19 @@ import orderRoutes from "./routes/order.routes.js";
 const app = express();
 
 // ================= Swagger =================
-
-
-// __dirname equivalent in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Adjust path based on your project structure
-const swaggerPath = resolve(__dirname, "../swagger.yaml");
-
-const swaggerDocument = YAML.load(swaggerPath);
+// FIX: wrapped in try-catch so server doesn't crash on Vercel if path fails
+let swaggerDocument = {};
+try {
+  const swaggerPath = resolve(__dirname, "../swagger.yaml");
+  swaggerDocument = YAML.load(swaggerPath);
+} catch (e) {
+  console.error("Swagger YAML load failed:", e.message);
+}
 ///-----------------------
+
 app.use(express.json());
 
 app.use(
@@ -48,20 +50,23 @@ app.use(
     allowedHeaders: "*",
   }),
 );
+
 // Routes
 app.use("/api/user", userRoutes);
 app.use("/api/product", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/order", orderRoutes);
 
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerDocument, {
-    customCss: ".swagger-ui .topbar { display: none }",
-    customSiteTitle: "i-OwnJersey API Docs",
-  }),
-);
+// FIX: Vercel-compatible swagger setup (serve both /api-docs and /api-docs/)
+app.use("/api-docs", swaggerUi.serve);
+app.get("/api-docs", swaggerUi.setup(swaggerDocument, {
+  customCss: ".swagger-ui .topbar { display: none }",
+  customSiteTitle: "i-OwnJersey API Docs",
+}));
+app.get("/api-docs/", swaggerUi.setup(swaggerDocument, {
+  customCss: ".swagger-ui .topbar { display: none }",
+  customSiteTitle: "i-OwnJersey API Docs",
+}));
 
 app.get("/", (req, res) => {
   res.json({
@@ -70,7 +75,6 @@ app.get("/", (req, res) => {
     documentation: "/api-docs",
   });
 });
-
 
 // Server
 const PORT = process.env.PORT;
