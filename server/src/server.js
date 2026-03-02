@@ -1,71 +1,82 @@
-import 'dotenv/config';
+import "dotenv/config";
 
-import express from 'express';
-import cors from 'cors';
+import express from "express";
+import cors from "cors";
 
-import './config/mongodb.js';
-import './config/cloudinary.js';
+import YAML from "yamljs";
+import swaggerUi from "swagger-ui-express";
+import { resolve } from "path";
 
-//swagger
-import { swaggerUi,swaggerDocument } from './config/swagger.js';
+import "./config/mongodb.js";
+import "./config/cloudinary.js";
 
-import userRoutes from './routes/user.routes.js';
-import productRoutes from './routes/product.routes.js';
-import cartRoutes from './routes/cart.routes.js';
-import orderRoutes from './routes/order.routes.js';
+import userRoutes from "./routes/user.routes.js";
+import productRoutes from "./routes/product.routes.js";
+import cartRoutes from "./routes/cart.routes.js";
+import orderRoutes from "./routes/order.routes.js";
 
 const app = express();
 
-app.use(express.json());
+// ================= Swagger =================
+const swaggerDocument = YAML.load(resolve("./swagger.yaml"));
 
-app.use(cors({
-  origin: [
-    "https://i-own-jersey.vercel.app",
-    "https://i-own-jersey-admin.vercel.app",
-    "http://localhost:5173",
-    "http://localhost:5174"
-  ],
-  credentials: true,
-  methods: "GET,POST,PUT,DELETE,OPTIONS",
-  allowedHeaders: "*",
-}));
-
-// SET SERVERS BEFORE REGISTERING SWAGGER
+// Dynamic server URL
 swaggerDocument.servers = [
   {
-    url: process.env.NODE_ENV === 'production'
-      ? 'https://i-own-jersey-backend.vercel.app'
-      : `http://localhost:${process.env.PORT}`,
-    description: 'API Server'
-  }
+    url:
+      process.env.NODE_ENV === "production"
+        ? "https://i-own-jersey-backend.vercel.app"
+        : `http://localhost:${process.env.PORT}`,
+    description: "API Server",
+  },
 ];
 
 app.use(
-  '/api-docs',
+  "/api-docs",
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument, {
-    customCss: '.swagger-ui .topbar { display: none }',
+    customCss: ".swagger-ui .topbar { display: none }",
     customSiteTitle: "i-OwnJersey API Docs",
   })
 );
 
+// ===========================================
 
-app.get('/', (req, res) => {
-  res.json({ 
-    success: true, 
-    message: 'API is working!',
-    documentation : '/api-docs' 
+app.use(express.json());
+
+app.use(
+  cors({
+    origin: [
+      process.env.FRONTEND_PROD,
+      process.env.ADMIN_PROD,
+      `http://localhost:${process.env.ADMIN_DEV}`,
+      `http://localhost:${process.env.FRONTEND_DEV}`,
+      `http://localhost:${process.env.PORT}`,
+    ],
+    credentials: true,
+    methods: "GET,POST,PUT,DELETE,OPTIONS",
+    allowedHeaders: "*",
+  })
+);
+
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "API is working!",
+    documentation: "/api-docs",
   });
 });
 
-app.use('/api/user', userRoutes);
-app.use('/api/product', productRoutes);
-app.use('/api/cart', cartRoutes);
-app.use('/api/order', orderRoutes);
+// Routes
+app.use("/api/user", userRoutes);
+app.use("/api/product", productRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/order", orderRoutes);
 
-
-
-const PORT = process.env.PORT; 
-app.listen(PORT, () => {  console.log(`Server running on PORT ${PORT}`); });
+// Server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on PORT ${PORT}`);
+});
 
 export default app;
