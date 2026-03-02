@@ -3,9 +3,12 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 
+//swagger-----
 import YAML from "yamljs";
 import swaggerUi from "swagger-ui-express";
-import { resolve } from "path";
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
+//-------------
 
 import "./config/mongodb.js";
 import "./config/cloudinary.js";
@@ -18,8 +21,17 @@ import orderRoutes from "./routes/order.routes.js";
 const app = express();
 
 // ================= Swagger =================
-const swaggerDocument = YAML.load(resolve("./swagger.yaml"));
 
+
+// __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Adjust path based on your project structure
+const swaggerPath = resolve(__dirname, "../swagger.yaml");
+
+const swaggerDocument = YAML.load(swaggerPath);
+///-----------------------
 app.use(express.json());
 
 app.use(
