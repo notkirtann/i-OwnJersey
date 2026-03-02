@@ -3,12 +3,9 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 
-//swagger-----
 import YAML from "yamljs";
-import swaggerUi from "swagger-ui-express";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
-//-------------
 
 import "./config/mongodb.js";
 import "./config/cloudinary.js";
@@ -17,14 +14,13 @@ import userRoutes from "./routes/user.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import orderRoutes from "./routes/order.routes.js";
+import { swaggerHtml } from "./config/swagger-vercel.js";
 
 const app = express();
 
-// ================= Swagger =================
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// FIX: wrapped in try-catch so server doesn't crash on Vercel if path fails
 let swaggerDocument = {};
 try {
   const swaggerPath = resolve(__dirname, "../swagger.yaml");
@@ -32,7 +28,6 @@ try {
 } catch (e) {
   console.error("Swagger YAML load failed:", e.message);
 }
-///-----------------------
 
 app.use(express.json());
 
@@ -48,7 +43,7 @@ app.use(
     credentials: true,
     methods: "GET,POST,PUT,DELETE,OPTIONS",
     allowedHeaders: "*",
-  }),
+  })
 );
 
 // Routes
@@ -57,16 +52,20 @@ app.use("/api/product", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/order", orderRoutes);
 
-// FIX: Vercel-compatible swagger setup (serve both /api-docs and /api-docs/)
-app.use("/api-docs", swaggerUi.serve);
-app.get("/api-docs", swaggerUi.setup(swaggerDocument, {
-  customCss: ".swagger-ui .topbar { display: none }",
-  customSiteTitle: "i-OwnJersey API Docs",
-}));
-app.get("/api-docs/", swaggerUi.setup(swaggerDocument, {
-  customCss: ".swagger-ui .topbar { display: none }",
-  customSiteTitle: "i-OwnJersey API Docs",
-}));
+// Serve swagger spec as JSON
+app.get("/api-docs/swagger.json", (req, res) => {
+  res.json(swaggerDocument);
+});
+
+app.get("/api-docs", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send(swaggerHtml);
+});
+
+app.get("/api-docs/", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send(swaggerHtml);
+});
 
 app.get("/", (req, res) => {
   res.json({
@@ -76,7 +75,6 @@ app.get("/", (req, res) => {
   });
 });
 
-// Server
 const PORT = process.env.PORT;
 if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => {
