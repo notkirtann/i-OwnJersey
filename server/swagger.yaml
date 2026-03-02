@@ -4,8 +4,17 @@ info:
   version: 1.0.0
   description: API documentation for i-OwnJersey e-commerce platform - Your ultimate destination for authentic sports jerseys
   contact:
-    name: i-OwnJersey Support
-    email: admin@iojersey.com
+    name: i-OwnJersey Support/Admin
+    email: contactkirtann@gmail.com
+
+servers:
+  - url: http://localhost:8000
+    description: Development server
+  - url: https://notkirtann-backend.vercel.app
+    description: Production server
+  - url: https://i-own-jersey-admin.vercel.app
+    description: Admin server
+
 tags:
   - name: User
     description: User authentication and management

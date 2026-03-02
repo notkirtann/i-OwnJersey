@@ -37,7 +37,7 @@ app.use(
   swaggerUi.setup(swaggerDocument, {
     customCss: ".swagger-ui .topbar { display: none }",
     customSiteTitle: "i-OwnJersey API Docs",
-  })
+  }),
 );
 
 // ===========================================
@@ -47,16 +47,16 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      process.env.FRONTEND_PROD,
-      process.env.ADMIN_PROD,
+      `${process.env.FRONTEND_PROD}`,
+      `${process.env.ADMIN_PROD}`,
       `http://localhost:${process.env.ADMIN_DEV}`,
       `http://localhost:${process.env.FRONTEND_DEV}`,
       `http://localhost:${process.env.PORT}`,
-    ],
+    ].filter(Boolean),
     credentials: true,
     methods: "GET,POST,PUT,DELETE,OPTIONS",
     allowedHeaders: "*",
-  })
+  }),
 );
 
 app.get("/", (req, res) => {
@@ -80,6 +80,5 @@ if (process.env.NODE_ENV !== "production") {
     console.log(`Server running on PORT ${PORT}`);
   });
 }
-
 
 export default app;
