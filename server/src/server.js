@@ -20,28 +20,6 @@ const app = express();
 // ================= Swagger =================
 const swaggerDocument = YAML.load(resolve("./swagger.yaml"));
 
-// Dynamic server URL
-swaggerDocument.servers = [
-  {
-    url:
-      process.env.NODE_ENV === "production"
-        ? "https://i-own-jersey-backend.vercel.app"
-        : `http://localhost:${process.env.PORT}`,
-    description: "API Server",
-  },
-];
-
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerDocument, {
-    customCss: ".swagger-ui .topbar { display: none }",
-    customSiteTitle: "i-OwnJersey API Docs",
-  }),
-);
-
-// ===========================================
-
 app.use(express.json());
 
 app.use(
@@ -58,6 +36,20 @@ app.use(
     allowedHeaders: "*",
   }),
 );
+// Routes
+app.use("/api/user", userRoutes);
+app.use("/api/product", productRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/order", orderRoutes);
+
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, {
+    customCss: ".swagger-ui .topbar { display: none }",
+    customSiteTitle: "i-OwnJersey API Docs",
+  }),
+);
 
 app.get("/", (req, res) => {
   res.json({
@@ -67,11 +59,6 @@ app.get("/", (req, res) => {
   });
 });
 
-// Routes
-app.use("/api/user", userRoutes);
-app.use("/api/product", productRoutes);
-app.use("/api/cart", cartRoutes);
-app.use("/api/order", orderRoutes);
 
 // Server
 const PORT = process.env.PORT;
