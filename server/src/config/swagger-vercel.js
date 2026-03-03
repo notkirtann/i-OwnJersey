@@ -21,4 +21,4 @@ export const swaggerHtml = `<!DOCTYPE html>
     };
   </script>
 </body>
-</html>`
+</html>`;
