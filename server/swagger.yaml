@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: i-OwnJersey API by Kirtan
   version: 1.0.0
-  description: API documentation for i-OwnJersey e-commerce platform - Your ultimate destination for authentic football jerseys
+  description: API documentation for i-OwnJersey e-commerce platform - Your ultimate destination for authentic football jerseys by Kirtan
   contact:
     name: i-OwnJersey Support
     email: support@iownjersey.com
