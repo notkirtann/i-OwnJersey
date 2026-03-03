@@ -1,76 +1,82 @@
-import 'dotenv/config'
-import User from '../models/userModel.js'
-import jwt from 'jsonwebtoken'
+import "dotenv/config";
+import User from "../models/userModel.js";
+import jwt from "jsonwebtoken";
 import { deleteMail, welcomeMail } from "../emails/account.js";
 
-const registerUser = async (req,res)=>{
-    try {
-        const user = new User(req.body)
-        const token = await user.genAuthToken()
-        await user.save();
+const registerUser = async (req, res) => {
+  try {
+    const user = new User(req.body);
+    const token = await user.genAuthToken();
+    await user.save();
 
-        //welcome mail
-        await welcomeMail(user.email)
+    //welcome mail
+    await welcomeMail(user.email);
 
-        res.status(201).json({success: true, token});
-
-    } catch (error) {
-        res.json({ success: false, message: error.message })
-    }
-}
-
-const loginUser = async (req,res)=>{
-    try {
-    const user = await User.findByCredentials(req.body.email, req.body.password)
-    const token = await user.genAuthToken()
-    res.json({success: true, token})
+    res.status(201).json({ success: true, token });
   } catch (error) {
-    res.json({ success: false, message: error.message })
+    res.json({ success: false, message: error.message });
   }
-}
-
-const logoutUser = async (req,res) => {
-   try {
-     req.user.tokens = []
-    await req.user.save()
-    res.send('Succesfully Logout')
-  } catch (e) {
-    res.status(500).send()
-  } 
 };
 
-const adminLogin = async (req,res) => {
+const loginUser = async (req, res) => {
   try {
-    const {email,password} = req.body
-    if(email===process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASS){
-      const token =  jwt.sign(email+password,process.env.JWT_SECRET)
-      res.json({ success: true, token })
-    }else{
-      res.json({ success: false, message: 'Invalid credentials' })
+    const user = await User.findByCredentials(
+      req.body.email,
+      req.body.password,
+    );
+    const token = await user.genAuthToken();
+    res.json({ success: true, token });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+const logoutUser = async (req, res) => {
+  try {
+    req.user.tokens = [];
+    await req.user.save();
+    res.send("Succesfully Logout");
+  } catch (e) {
+    res.status(500).send();
+  }
+};
+
+const adminLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (
+      email === process.env.ADMIN_EMAIL &&
+      password === process.env.ADMIN_PASS
+    ) {
+      const token = jwt.sign(email + password, process.env.JWT_SECRET);
+      res.json({ success: true, token });
+    } else {
+      res.json({ success: false, message: "Invalid credentials" });
     }
   } catch (error) {
     res.status(500).send({ error: "Internal server error" });
-  } 
-    
-}
+  }
+};
 
 const getMyProfile = async (req, res) => {
-  res.json(req.user)
-}
+  res.json(req.user);
+};
 
 const updateUser = async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['name', 'email', 'password'];
-  const isValidOperation = updates.every(update => allowedUpdates.includes(update));
+  const allowedUpdates = ["name", "email", "password"];
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update),
+  );
 
   if (!isValidOperation) {
-    return res.status(400).send({ error: 'Invalid updates!' });
+    return res.status(400).send({ error: "Invalid updates!" });
   }
 
   try {
-    updates.forEach(update => req.user[update] = req.body[update]);
+    updates.forEach((update) => (req.user[update] = req.body[update]));
     await req.user.save();
-    
+
     res.send(req.user);
   } catch (error) {
     res.status(400).send({ error: error.message });
@@ -79,9 +85,9 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    await req.user.deleteOne()
+    await req.user.deleteOne();
     //welcome mail
-    await deleteMail(req.user.email)
+    await deleteMail(req.user.email);
     res.send(req.user);
   } catch (error) {
     res.status(500).send({ error: "Internal server error" });
@@ -89,11 +95,11 @@ const deleteUser = async (req, res) => {
 };
 
 export {
-    registerUser,
-    loginUser,
-    logoutUser,
-    adminLogin,
-    getMyProfile,
-    updateUser,
-    deleteUser
-}
+  registerUser,
+  loginUser,
+  logoutUser,
+  adminLogin,
+  getMyProfile,
+  updateUser,
+  deleteUser,
+};
