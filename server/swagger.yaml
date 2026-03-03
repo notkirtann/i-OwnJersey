@@ -2,10 +2,10 @@ openapi: 3.0.0
 info:
   title: i-OwnJersey API by Kirtan
   version: 1.0.0
-  description: API documentation for i-OwnJersey e-commerce platform - Your ultimate destination for authentic sports jerseys designed by Kirtan
+  description: API documentation for i-OwnJersey e-commerce platform - Your ultimate destination for authentic football jerseys
   contact:
-    name: i-OwnJersey Support/Admin
-    email: contactkirtann@gmail.com
+    name: i-OwnJersey Support
+    email: support@iownjersey.com
 
 tags:
   - name: User
@@ -13,7 +13,7 @@ tags:
   - name: Admin
     description: Admin authentication and operations
   - name: Product
-    description: Product management
+    description: Football product management
   - name: Cart
     description: Shopping cart operations
   - name: Order
@@ -25,7 +25,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: Enter JWT token from login/register
+      description: Enter JWT token received after login/register
 
   schemas:
     User:
@@ -37,16 +37,16 @@ components:
       properties:
         name:
           type: string
-          example: John Doe
+          example: Cristiano Ronaldo
         email:
           type: string
           format: email
-          example: john@example.com
+          example: ronaldo7@footballmail.com
         password:
           type: string
           format: password
           minLength: 8
-          example: StrongPass123!
+          example: CR7Legend@2025
 
     LoginRequest:
       type: object
@@ -57,11 +57,10 @@ components:
         email:
           type: string
           format: email
-          example: john@example.com
+          example: messi10@footballmail.com
         password:
           type: string
-          format: password
-          example: StrongPass123!
+          example: GOATMessi@10
 
     AdminLoginRequest:
       type: object
@@ -71,10 +70,10 @@ components:
       properties:
         email:
           type: string
-          example: admin@iOwnJersey.com
+          example: admin@iownjersey.com
         password:
           type: string
-          example: SupportLB
+          example: Admin@Jersey2025
 
     Product:
       type: object
@@ -88,16 +87,16 @@ components:
       properties:
         _id:
           type: string
-          example: 507f1f77bcf86cd799439011
+          example: 65af1f77bcf86cd799439011
         name:
           type: string
-          example: Manchester United Home Jersey 24/25
+          example: Real Madrid Home Jersey 24/25 - Jude Bellingham
         description:
           type: string
-          example: Official Manchester United home jersey with premium fabric
+          example: Official Real Madrid 2024/25 home jersey with breathable performance fabric
         price:
           type: number
-          example: 2500
+          example: 3499
         category:
           type: string
           enum: [Men, Women, Kids]
@@ -120,80 +119,34 @@ components:
           items:
             type: string
           example:
-            - https://cloudinary.com/image1.jpg
-            - https://cloudinary.com/image2.jpg
+            - https://res.cloudinary.com/iownjersey/realmadrid-home-front.jpg
+            - https://res.cloudinary.com/iownjersey/realmadrid-home-back.jpg
         date:
           type: number
-          example: 1640000000000
-
-    ProductAddRequest:
-      type: object
-      required:
-        - name
-        - description
-        - price
-        - category
-        - subCategory
-        - sizes
-      properties:
-        name:
-          type: string
-          example: Barcelona Home Jersey
-        description:
-          type: string
-          example: Official Barcelona home jersey
-        price:
-          type: number
-          example: 2800
-        category:
-          type: string
-          enum: [Men, Women, Kids]
-          example: Men
-        subCategory:
-          type: string
-          enum: [Jersey, Shorts, Studs]
-          example: Jersey
-        sizes:
-          type: string
-          example: '["S","M","L","XL"]'
-        bestseller:
-          type: string
-          example: "true"
-        image1:
-          type: string
-          format: binary
-        image2:
-          type: string
-          format: binary
-        image3:
-          type: string
-          format: binary
-        image4:
-          type: string
-          format: binary
+          example: 1710000000000
 
     CartItem:
       type: object
       properties:
         itemId:
           type: string
-          example: 507f1f77bcf86cd799439011
+          example: 65af1f77bcf86cd799439011
         size:
           type: string
-          example: M
+          example: L
         quantity:
           type: number
-          example: 2
+          example: 1
 
     Order:
       type: object
       properties:
         _id:
           type: string
-          example: 507f1f77bcf86cd799439011
+          example: 88df1f77bcf86cd799431234
         userId:
           type: string
-          example: 507f1f77bcf86cd799439011
+          example: 65af1f77bcf86cd799439011
         items:
           type: array
           items:
@@ -201,30 +154,34 @@ components:
             properties:
               name:
                 type: string
+                example: Barcelona Away Jersey 24/25 - Pedri
               quantity:
                 type: number
+                example: 2
               size:
                 type: string
+                example: M
               price:
                 type: number
+                example: 2999
         amount:
           type: number
-          example: 2510
+          example: 5998
         address:
           type: object
           properties:
             firstName:
               type: string
-              example: John
+              example: Lionel
             lastName:
               type: string
-              example: Doe
+              example: Messi
             email:
               type: string
-              example: john@example.com
+              example: messi10@footballmail.com
             street:
               type: string
-              example: 123 Main St
+              example: 22 Football Avenue
             city:
               type: string
               example: Bangalore
@@ -233,7 +190,7 @@ components:
               example: Karnataka
             zipcode:
               type: string
-              example: 560001
+              example: 560066
             country:
               type: string
               example: India
@@ -247,13 +204,13 @@ components:
         paymentMethod:
           type: string
           enum: [COD, Stripe, Razorpay]
-          example: COD
+          example: Razorpay
         payment:
           type: boolean
-          example: false
+          example: true
         date:
           type: number
-          example: 1640000000000
+          example: 1710000000000
 
     PlaceOrderRequest:
       type: object
@@ -269,58 +226,52 @@ components:
             properties:
               _id:
                 type: string
+                example: 65af1f77bcf86cd799439011
               name:
                 type: string
+                example: Manchester United Third Kit 24/25 - Garnacho
               quantity:
                 type: number
+                example: 1
               size:
                 type: string
+                example: XL
               price:
                 type: number
+                example: 3199
         amount:
           type: number
-          example: 2510
+          example: 3199
         address:
           type: object
-          required:
-            - firstName
-            - lastName
-            - email
-            - street
-            - city
-            - state
-            - zipcode
-            - country
-            - phone
           properties:
             firstName:
               type: string
-              example: John
+              example: Kylian
             lastName:
               type: string
-              example: Doe
+              example: Mbappé
             email:
               type: string
-              example: john@example.com
+              example: mbappe7@footballmail.com
             street:
               type: string
-              example: 123 Main St
+              example: 7 Champions Street
             city:
               type: string
-              example: Bangalore
+              example: Mumbai
             state:
               type: string
-              example: Karnataka
+              example: Maharashtra
             zipcode:
               type: string
-              example: 560001
+              example: 400001
             country:
               type: string
               example: India
             phone:
               type: string
-              example: 9876543210
-
+              example: 9988776655
     SuccessResponse:
       type: object
       properties:
